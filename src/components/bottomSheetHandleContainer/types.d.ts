@@ -10,6 +10,7 @@ export interface BottomSheetHandleContainerProps
       BottomSheetProps,
       | 'handleComponent'
       | 'enableHandlePanningGesture'
+      | 'onBeforeHandlePan'
       | 'handleIndicatorStyle'
       | 'handleStyle'
     >,

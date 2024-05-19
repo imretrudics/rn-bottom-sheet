@@ -38,6 +38,8 @@ export interface BottomSheetScrollableProps {
    */
   focusHook?: (effect: EffectCallback, deps?: DependencyList) => void;
 
+  customContentHeight?: number;
+
   /**
    * Custom hook to provide scroll events handler, which will allow advance and
    * customize handling for scrollables.

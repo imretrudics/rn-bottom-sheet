@@ -1,7 +1,7 @@
 import React, { memo, useCallback, useMemo } from 'react';
 import type { LayoutChangeEvent } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
-import Animated from 'react-native-reanimated';
+import Animated, { runOnJS } from 'react-native-reanimated';
 import BottomSheetHandle from '../bottomSheetHandle';
 import {
   useBottomSheetGestureHandlers,
@@ -16,6 +16,7 @@ function BottomSheetHandleContainerComponent({
   animatedPosition,
   simultaneousHandlers: _internalSimultaneousHandlers,
   enableHandlePanningGesture,
+  onBeforeHandlePan,
   handleHeight,
   handleComponent: _providedHandleComponent,
   handleStyle: _providedHandleStyle,
@@ -57,6 +58,11 @@ function BottomSheetHandleContainerComponent({
       .enabled(enableHandlePanningGesture!)
       .shouldCancelWhenOutside(false)
       .runOnJS(false)
+      .onBegin(() => {
+        if (onBeforeHandlePan) {
+          runOnJS(onBeforeHandlePan)();
+        }
+      })
       .onStart(handlePanGestureHandler.handleOnStart)
       .onChange(handlePanGestureHandler.handleOnChange)
       .onEnd(handlePanGestureHandler.handleOnEnd)
@@ -92,6 +98,7 @@ function BottomSheetHandleContainerComponent({
   }, [
     activeOffsetX,
     activeOffsetY,
+    onBeforeHandlePan,
     enableHandlePanningGesture,
     failOffsetX,
     failOffsetY,
