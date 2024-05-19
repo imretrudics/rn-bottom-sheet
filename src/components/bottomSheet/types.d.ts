@@ -82,6 +82,9 @@ export interface BottomSheetProps
    * @default true
    */
   enableHandlePanningGesture?: boolean;
+
+  onBeforeHandlePan?: () => void;
+
   /**
    * Enable over drag for the sheet.
    * @type boolean

@@ -77,7 +77,7 @@ import {
   DEFAULT_DYNAMIC_SIZING,
   DEFAULT_ACCESSIBLE,
   DEFAULT_ACCESSIBILITY_LABEL,
-  DEFAULT_ACCESSIBILITY_ROLE
+  DEFAULT_ACCESSIBILITY_ROLE,
 } from './constants';
 import type { BottomSheetMethods, Insets } from '../../types';
 import type { BottomSheetProps, AnimateToPositionType } from './types';
@@ -110,6 +110,7 @@ const BottomSheetComponent = forwardRef<BottomSheet, BottomSheetProps>(
       enablePanDownToClose = DEFAULT_ENABLE_PAN_DOWN_TO_CLOSE,
       enableDynamicSizing = DEFAULT_DYNAMIC_SIZING,
       overDragResistanceFactor = DEFAULT_OVER_DRAG_RESISTANCE_FACTOR,
+      onBeforeHandlePan = () => {},
 
       // styles
       style: _providedStyle,
@@ -1105,6 +1106,7 @@ const BottomSheetComponent = forwardRef<BottomSheet, BottomSheetProps>(
         stopAnimation,
         setScrollableRef,
         removeScrollableRef,
+        onBeforeHandlePan,
       }),
       [
         animatedIndex,
@@ -1146,6 +1148,7 @@ const BottomSheetComponent = forwardRef<BottomSheet, BottomSheetProps>(
         removeScrollableRef,
         animateToPosition,
         stopAnimation,
+        onBeforeHandlePan,
       ]
     );
     const externalContextVariables = useMemo(
@@ -1199,10 +1202,7 @@ const BottomSheetComponent = forwardRef<BottomSheet, BottomSheetProps>(
       }
 
       return {
-        height: animate({
-          point: animatedContentHeightMax.value,
-          configs: _providedAnimationConfigs,
-        }),
+        height: animatedContentHeightMax.value,
       };
     }, [animatedContentHeightMax, enableDynamicSizing, animatedContentHeight]);
     const contentContainerStyle = useMemo(
@@ -1668,6 +1668,7 @@ const BottomSheetComponent = forwardRef<BottomSheet, BottomSheetProps>(
                   animatedPosition={animatedPosition}
                   handleHeight={animatedHandleHeight}
                   enableHandlePanningGesture={enableHandlePanningGesture}
+                  onBeforeHandlePan={onBeforeHandlePan}
                   enableOverDrag={enableOverDrag}
                   enablePanDownToClose={enablePanDownToClose}
                   overDragResistanceFactor={overDragResistanceFactor}

@@ -7,6 +7,7 @@ import type { BottomSheetViewProps } from './types';
 import { print } from '../../utilities';
 
 function BottomSheetViewComponent({
+  extraHeightToAdd = 0,
   focusHook: useFocusHook = useEffect,
   enableFooterMarginAdjustment = false,
   onLayout,
@@ -55,7 +56,8 @@ function BottomSheetViewComponent({
   const handleLayout = useCallback(
     (event: LayoutChangeEvent) => {
       if (enableDynamicSizing) {
-        animatedContentHeight.value = event.nativeEvent.layout.height;
+        animatedContentHeight.value =
+          event.nativeEvent.layout.height + extraHeightToAdd;
       }
 
       if (onLayout) {
@@ -70,7 +72,7 @@ function BottomSheetViewComponent({
         },
       });
     },
-    [onLayout, animatedContentHeight, enableDynamicSizing]
+    [onLayout, animatedContentHeight, enableDynamicSizing, extraHeightToAdd]
   );
   //#endregion
 

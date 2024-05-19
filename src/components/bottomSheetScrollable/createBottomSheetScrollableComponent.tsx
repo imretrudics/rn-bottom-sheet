@@ -28,6 +28,7 @@ export function createBottomSheetScrollableComponent<T, P>(
       // hooks
       focusHook,
       scrollEventsHandlersHook,
+      customContentHeight,
       // props
       enableFooterMarginAdjustment = false,
       overScrollMode = 'never',
@@ -86,7 +87,7 @@ export function createBottomSheetScrollableComponent<T, P>(
       (contentWidth: number, contentHeight: number) => {
         if (enableDynamicSizing) {
           animatedContentHeight.value =
-            contentHeight +
+            (customContentHeight ? customContentHeight : contentHeight) +
             (enableFooterMarginAdjustment ? animatedFooterHeight.value : 0);
         }
 
